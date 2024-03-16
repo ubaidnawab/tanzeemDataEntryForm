@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanzeem data entry form</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Ensure the page takes up the full viewport height */
+    }
+    .container {
+        width: 400px; /* Set the width of the form */
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .logo {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .logo img {
+        width: 100px;
+        border-radius: 50%;
+        border: 5px solid #4CAF50;
+    }
+    input[type="text"], select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+    input[type="submit"] {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+    /* Popup styles */
+    .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+    .popup {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        position: relative;
+    }
+    .popup-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+    .loader {
+        border: 8px solid #474747;
+        border-top: 8px solid #4CAF50; /* Use your primary color */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 0.6s linear infinite;
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        transform: translate(-50%, -50%);
+        z-index: 999; /* Ensure it's above other elements */
+        display: none;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <img src="Tanzeem-e-Islami_Logo.png" alt="Logo">
+        <h3>Data Entry Form</h3>
+    </div>
+    <form id="myForm" method="post" action="" name="data-entry-form">
+        <input type="text" name="name" placeholder="Name" required><br>
+        <input type="text" name="muavin" placeholder="Muavin Name" required><br>
+        <select name="area" required> 
+            <option value="">Select Area</option>
+            <option value="gulshan">gulshan</option>
+            <option value="lalokhait">lalokhait</option>
+            <option value="maoptionr">maoptionr</option>
+            <option value="nazmabad">nazmabad</option>
+            <option value="north karachi">north karachi</option>
+            <option value="paposh">paposh</option>
+            <option value="liyari">liyari</option>
+            <option value="garden">garden</option>
+            <option value="orangi town">orangi town</option>
+            <option value="new karachi">new karachi</option>
+            <option value="nayanazmabad">nayanazmabad</option>
+        </select><br>
+        <input type="text" name="contact" placeholder="Contact Number" required><br>
+        <input type="text" name="address" placeholder="Address" required><br>
+        <input type="submit" value="Submit">
+        <div class="loader" id="loader"></div> <!-- Loader added here -->
+    </form>
+</div>
+
+<div class="overlay" id="overlay">
+    <div class="popup">
+        <span class="popup-close" onclick="closePopup()">&times;</span>
+        <h2 id="popupMessage">Success!</h2>
+        <p>Your form has been submitted.</p>
+    </div>
+</div>
+
+<script>
+    var form = document.forms['data-entry-form'];
+    document.getElementById("myForm").addEventListener("submit", function(event){
+        event.preventDefault();
+        document.getElementById("loader").style.display = "block"; // Show loader
+        fetch('https://script.google.com/macros/s/AKfycbxhFn2deZEUqU_JG2NqWmO3ND5BOgoh8OPpU1eeh_g7lEcX9QlrfiF8vSr3uUEbI1AYcw/exec', { method: 'POST', body: new FormData(form) })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("loader").style.display = "none"; // Hide loader
+            document.getElementById("popupMessage").textContent = "Success!";
+            document.getElementById("overlay").style.display = "flex";
+        })
+        .catch(error => {
+            document.getElementById("loader").style.display = "none"; // Hide loader
+            document.getElementById("popupMessage").textContent = error.message;
+            document.getElementById("overlay").style.display = "flex";
+        });
+    });
+
+    function closePopup() {
+        document.getElementById("overlay").style.display = "none";
+        location.reload(); // Reload the page
+    }
+</script>
+
+</body>
+</html>
