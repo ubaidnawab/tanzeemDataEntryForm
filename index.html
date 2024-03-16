@@ -108,7 +108,6 @@
     </div>
     <form id="myForm" method="post" action="" name="data-entry-form">
         <input type="text" name="name" placeholder="Name" required><br>
-        <input type="text" name="muavin" placeholder="Muavin Name" required><br>
         <select name="area" required> 
             <option value="">Select Area</option>
             <option value="North N. Block L">North N. Block L</option>
@@ -133,9 +132,25 @@
             <option value="Water pump">Water pump</option>
             <option value="Sakhi Hasan">Sakhi Hasan</option>
             <option value="DC Office">DC Office</option>
+            <option value="Other">Other</option>
         </select><br>
         <input type="text" name="contact" placeholder="Contact Number" required><br>
         <input type="text" name="address" placeholder="Address" required><br>
+        <select name="muavin" requiredt >
+            <option value="">Select Muavin</option>
+            <option value="Zeeshan Ismail">Zeeshan Ismail</option>
+            <option value="Saim">Saim</option>
+            <option value="Kashif Saeed">Kashif Saeed</option>
+            <option value="Ali Naseem">Ali Naseem</option>
+            <option value="Zahid Bhai">Zahid Bhai</option>
+            <option value="Mohsin sheikh">Mohsin sheikh</option>
+            <option value="Ahsan Farooq">Ahsan Farooq</option>
+            <option value="Hassan Abedi">Hassan Abedi</option>
+            <option value="Mushtaq Ahmed">Mushtaq Ahmed</option>
+            <option value="Hassan Naqvi">Hassan Naqvi</option>
+            <option value="Nadeem Akhtar">Nadeem Akhtar</option>
+            <option value="Khizar">Khizar</option>
+          </select>
         <input type="submit" value="Submit">
         <div class="loader" id="loader"></div> <!-- Loader added here -->
     </form>
@@ -154,7 +169,7 @@
     document.getElementById("myForm").addEventListener("submit", function(event){
         event.preventDefault();
         document.getElementById("loader").style.display = "block"; // Show loader
-        fetch('https://script.google.com/macros/s/AKfycbxQ3MzfZqrfFhm39sKqU3GjWYKZjR7zPMYPQYdniBBiRqD81lt8bF3q2OtabDhLurMyzQ/exec', { method: 'POST', body: new FormData(form) })
+        fetch('https://script.google.com/macros/s/AKfycbx33-aClXJZSYFGORqKTjHT6iFri0dA5zznPX2Nmu1NmijVC50K2fFdfEqJsGLJqG2vMQ/exec', { method: 'POST', body: new FormData(form) })
         .then(response => response.json())
         .then(data => {
             document.getElementById("loader").style.display = "none"; // Hide loader
