@@ -143,7 +143,7 @@
     document.getElementById("myForm").addEventListener("submit", function(event){
         event.preventDefault();
         document.getElementById("loader").style.display = "block"; // Show loader
-        fetch('https://script.google.com/macros/s/AKfycbxhFn2deZEUqU_JG2NqWmO3ND5BOgoh8OPpU1eeh_g7lEcX9QlrfiF8vSr3uUEbI1AYcw/exec', { method: 'POST', body: new FormData(form) })
+        fetch('https://script.google.com/macros/s/AKfycbxQ3MzfZqrfFhm39sKqU3GjWYKZjR7zPMYPQYdniBBiRqD81lt8bF3q2OtabDhLurMyzQ/exec', { method: 'POST', body: new FormData(form) })
         .then(response => response.json())
         .then(data => {
             document.getElementById("loader").style.display = "none"; // Hide loader
