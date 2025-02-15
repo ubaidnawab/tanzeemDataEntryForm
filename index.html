@@ -169,29 +169,29 @@
 </div>
 
 <script>
-    document.getElementById("contact").addEventListener("input", function(event) {
-            let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-            let formattedValue = '';
+    // document.getElementById("contact").addEventListener("input", function(event) {
+    //         let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+    //         let formattedValue = '';
 
-            if (value.length > 4) {
-                formattedValue += value.substring(0, 4) + '-';
-                if (value.length > 7) {
-                    formattedValue += value.substring(4, 7) + '-';
-                    if (value.length > 9) {
-                        formattedValue += value.substring(7, 9) + '-';
-                        formattedValue += value.substring(9, 11);
-                    } else {
-                        formattedValue += value.substring(7);
-                    }
-                } else {
-                    formattedValue += value.substring(4);
-                }
-            } else {
-                formattedValue += value;
-            }
+    //         if (value.length > 4) {
+    //             formattedValue += value.substring(0, 4) + '-';
+    //             if (value.length > 7) {
+    //                 formattedValue += value.substring(4, 7) + '-';
+    //                 if (value.length > 9) {
+    //                     formattedValue += value.substring(7, 9) + '-';
+    //                     formattedValue += value.substring(9, 11);
+    //                 } else {
+    //                     formattedValue += value.substring(7);
+    //                 }
+    //             } else {
+    //                 formattedValue += value.substring(4);
+    //             }
+    //         } else {
+    //             formattedValue += value;
+    //         }
 
-            event.target.value = formattedValue;
-        });
+    //         event.target.value = formattedValue;
+    //     });
     var form = document.forms['data-entry-form'];
     document.getElementById("myForm").addEventListener("submit", function(event){
         event.preventDefault();
