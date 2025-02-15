@@ -134,7 +134,8 @@
             <option value="DC Office">DC Office</option>
             <option value="Other">Other</option>
         </select><br>
-        <input type="text" name="contact" placeholder="Contact Number" required><br>
+        <input type="text" id="contact" name="contact" placeholder="0300-111-96-92" required 
+         title="Format: 0300-111-96-92">
         <input type="text" name="address" placeholder="Address" required><br>
         <select name="muavin" required>
             <option value="">Select Muavin</option>
@@ -162,22 +163,53 @@
 <div class="overlay" id="overlay">
     <div class="popup">
         <span class="popup-close" onclick="closePopup()">&times;</span>
-        <h2 id="popupMessage">Success!</h2>
-        <p>Your form has been submitted.</p>
+        <h2 id="popupHeading"></h2>
+        <p id="popupMessage"></p>
     </div>
 </div>
 
 <script>
+    document.getElementById("contact").addEventListener("input", function(event) {
+            let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+            let formattedValue = '';
+
+            if (value.length > 4) {
+                formattedValue += value.substring(0, 4) + '-';
+                if (value.length > 7) {
+                    formattedValue += value.substring(4, 7) + '-';
+                    if (value.length > 9) {
+                        formattedValue += value.substring(7, 9) + '-';
+                        formattedValue += value.substring(9, 11);
+                    } else {
+                        formattedValue += value.substring(7);
+                    }
+                } else {
+                    formattedValue += value.substring(4);
+                }
+            } else {
+                formattedValue += value;
+            }
+
+            event.target.value = formattedValue;
+        });
     var form = document.forms['data-entry-form'];
     document.getElementById("myForm").addEventListener("submit", function(event){
         event.preventDefault();
+        
         document.getElementById("loader").style.display = "block"; // Show loader
         fetch('https://script.google.com/macros/s/AKfycbx33-aClXJZSYFGORqKTjHT6iFri0dA5zznPX2Nmu1NmijVC50K2fFdfEqJsGLJqG2vMQ/exec', { method: 'POST', body: new FormData(form) })
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             document.getElementById("loader").style.display = "none"; // Hide loader
-            document.getElementById("popupMessage").textContent = "Success!";
             document.getElementById("overlay").style.display = "flex";
+            if(data.error) {
+                // document.getElementById("popupHeading").textContent = data.result;
+                document.getElementById("popupMessage").textContent = data.error;
+            } else {
+                document.getElementById("popupHeading").textContent = "Success";
+                document.getElementById("popupMessage").textContent = "Contact successfully submitted.";
+            }
         })
         .catch(error => {
             document.getElementById("loader").style.display = "none"; // Hide loader
