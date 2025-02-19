@@ -155,6 +155,11 @@
             <option value="Fakhar Alam">Fakhar Alam</option>
             <option value="M. Hassan Ilyas">M. Hassan Ilyas</option>
           </select>
+          <select name="location" id="location" required>
+            <option value="">select location</option>
+            <option value="naya_nazmabad">Naya Nazmabad</option>
+            <option value="5_star">5 Star</option>
+          </select>
         <input type="submit" value="Submit">
         <div class="loader" id="loader"></div> <!-- Loader added here -->
     </form>
@@ -169,6 +174,14 @@
 </div>
 
 <script>
+    const locationSet = localStorage.getItem("location");
+    if (locationSet) {
+        const locationObj = JSON.parse(locationSet); // Convert string to object
+        const locationSelect = document.getElementById("location");
+        if (locationSet) {
+        document.getElementById("location").value = locationObj.sendTo;
+    }
+    }
     document.getElementById("contact").addEventListener("input", function(event) {
             let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
             let formattedValue = '';
@@ -195,9 +208,15 @@
     var form = document.forms['data-entry-form'];
     document.getElementById("myForm").addEventListener("submit", function(event){
         event.preventDefault();
-        
+        let location = document.getElementById("location").value;
+        const sendTo = {'sendTo': location};
+        localStorage.setItem('location', JSON.stringify(sendTo));
+        let sheetUrl = "https://script.google.com/macros/s/AKfycbx33-aClXJZSYFGORqKTjHT6iFri0dA5zznPX2Nmu1NmijVC50K2fFdfEqJsGLJqG2vMQ/exec";
+        if (location == "naya_nazmabad") {
+            sheetUrl = "https://script.google.com/macros/s/AKfycbzY5iYBOdMzGWmEc_P9wr1olluTDnQlhm4jjqJd10FYKeuzBeCLS2uCeDjk4tUsfCGi0g/exec"
+        }
         document.getElementById("loader").style.display = "block"; // Show loader
-        fetch('https://script.google.com/macros/s/AKfycbx33-aClXJZSYFGORqKTjHT6iFri0dA5zznPX2Nmu1NmijVC50K2fFdfEqJsGLJqG2vMQ/exec', { method: 'POST', body: new FormData(form) })
+        fetch(sheetUrl, { method: 'POST', body: new FormData(form) })
         .then(response => response.json())
         .then(data => {
             console.log(data);
