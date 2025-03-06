@@ -137,29 +137,13 @@
         <input type="text" id="contact" name="contact" placeholder="0300-111-96-92" required 
          title="Format: 0300-111-96-92">
         <input type="text" name="address" placeholder="Address" required><br>
-        <select name="muavin" required>
-            <option value="">Select Muavin</option>
-            <option value="Zeeshan Ismail">Zeeshan Ismail</option>
-            <option value="Saim">Saim</option>
-            <option value="Kashif Saeed">Kashif Saeed</option>
-            <option value="Ali Naseem">Ali Naseem</option>
-            <option value="Zahid Bhai">Zahid Bhai</option>
-            <option value="Mohsin sheikh">Mohsin sheikh</option>
-            <option value="Ahsan Farooq">Ahsan Farooq</option>
-            <option value="Hassan Abedi">Hassan Abedi</option>
-            <option value="Mushtaq Ahmed">Mushtaq Ahmed</option>
-            <option value="Hassan Naqvi">Hassan Naqvi</option>
-            <option value="Nadeem Akhtar">Nadeem Akhtar</option>
-            <option value="Khizar">Khizar</option>
-            <option value="M Ayaz">M Ayaz</option>
-            <option value="Fakhar Alam">Fakhar Alam</option>
-            <option value="M. Hassan Ilyas">M. Hassan Ilyas</option>
+        <select id="muavin" name="muavin" required>
           </select>
           <select name="location" id="location" required>
             <option value="">select location</option>
             <option value="naya_nazmabad">Naya Nazmabad</option>
             <option value="5_star">Sakhi Hasan (Ghanchi)</option>
-          </select>
+          </select> 
         <input type="submit" value="Submit">
         <div class="loader" id="loader"></div> <!-- Loader added here -->
     </form>
@@ -174,13 +158,47 @@
 </div>
 
 <script>
+    const locationSelect = document.getElementById("location");
     const locationSet = localStorage.getItem("location");
+    let locationObj; // Convert string to object
     if (locationSet) {
-        const locationObj = JSON.parse(locationSet); // Convert string to object
+        locationObj = JSON.parse(locationSet);
         const locationSelect = document.getElementById("location");
         if (locationSet) {
-        document.getElementById("location").value = locationObj.sendTo;
+            locationSelect.value = locationObj.sendTo;
     }
+    }
+    let muavins = [];
+        // Array of Muavin names
+    const muavinsNayaNazmabad = [
+        "Kashif Saeed"
+    ];
+    const muavinsSakhiHassan = [
+        "Amaan Chipa", "Salman Ahmed", "Hassan Abidi", "Nadeem Akhtar", "Shumail Ahmed",
+        "Ahsan Farooq", "Shoaib Bhai", "Ameer Hamza", "Khalid Mumtaz", "Aslam Sahab",
+        "Anser Bhai", "Ahmer Babar", "Yasir Alvi", "Saadiq Bhai", "Raheel Bhai",
+        "Abdullah Bhai", "Raheel Zaidi", "Amir Basheer"
+    ];
+    const locat  = locationSet ? locationObj.sendTo : locationSelect.value;
+    muavins = locat === "naya_nazmabad" ? muavinsNayaNazmabad : muavinsSakhiHassan;
+    // Call function on page load
+    window.onload = populateMuavinDropdown(muavins);
+    // Listen for change event
+    locationSelect.addEventListener("change", function () {
+        muavins = this.value === "naya_nazmabad" ? muavinsNayaNazmabad : muavinsSakhiHassan;
+        populateMuavinDropdown(muavins);
+    });
+    // Function to populate the select dropdown
+    function populateMuavinDropdown(muavins) {
+    const select = document.getElementById("muavin");
+    select.innerHTML = `<option value="">Select Muavin</option>`; // Add default option
+
+    muavins.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+    });
     }
     document.getElementById("contact").addEventListener("input", function(event) {
             let value = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
